@@ -1,0 +1,95 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --primary-color: #f1f5f9;
+    --secondary-color: #172554;
+}
+
+main{
+    min-height: 100vh;
+    font-family: sans-serif;
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+    'form cv';
+    row-gap: 1rem;
+    column-gap: 1rem;
+    align-items: start;
+}
+
+.forms{
+    grid-area: form;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#cv {
+    grid-area: cv;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    align-self: stretch;
+    max-height: 100vh;
+}
+
+
+.form-box {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+    border-radius: 15px;
+}
+
+.form-box > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.form-box > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1rem;
+}
+
+.input-box {
+    color: #5a5b5a;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box > input, textarea {
+    margin-top: 5px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    border-style: hidden;
+    min-height: 30px;
+    padding-left: 5px;
+}
+
+.input-box > textarea {
+    min-height: 50px;
+    padding-top: 5px;
+}
+
+button, input[type='submit'], input[type='reset'] {
+    background: transparent;
+    border: 0;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+button:hover, input[type='submit']:hover, input[type='reset']:hover {
+    cursor: pointer;
+    background-color: #e2e8f0;
+    border-radius: 2.5rem;
+    transition: background-color 0.3s ease-in-out;
+}
