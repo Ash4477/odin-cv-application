@@ -1,9 +1,15 @@
 import FormBox from "./FormBox";
 
-const ExperienceForm = ({ companyName, role, startYear, endYear, description }) => {
+const ExperienceForm = ({ companyName, role, startYear, endYear, description, activeStatus, setActiveStatus }) => {
+    const formId = 2;
 
     return(
-        <FormBox formTitle="Exprience Details">
+        <FormBox
+            formTitle="Exprience Details"
+            activeStatus={activeStatus}
+            setActiveStatus={setActiveStatus}
+            activeFormId={formId}
+        >
             <form>
                 <div className="input-box">
                     <label htmlFor="institute-input">Institute Name</label>

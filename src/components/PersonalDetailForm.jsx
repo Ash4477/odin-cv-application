@@ -1,8 +1,14 @@
 import FormBox from "./FormBox";
 
-const PersonalDetailForm = ({ name, number, email, bio }) => {
+const PersonalDetailForm = ({ name, number, email, bio, activeStatus, setActiveStatus }) => {
+    const formId = 0;
     return(
-        <FormBox formTitle="Personal Details">
+        <FormBox 
+            formTitle="Personal Details"  
+            activeStatus={activeStatus} 
+            setActiveStatus={setActiveStatus} 
+            activeFormId={formId}
+        >
             <form>
                 <div className="input-box">
                     <label htmlFor="fullname-input">Full Name</label>
