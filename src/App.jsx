@@ -8,7 +8,7 @@ function App() {
   const [currentCvInfo, setCurrentCvInfo] = useState({
     personalInfo: {
       name: 'Adil Feroze',
-      phoneNumber: '03120430315',
+      number: '03120430315',
       email: 'adilferoze321@gmail.com',
       summary: 'I am a very good programmer',
     },
@@ -17,16 +17,22 @@ function App() {
     },
     experienceInfo: {},
   });
-  const [activeForm, setActiveForm] = useState(1);
+  const [activeForm, setActiveForm] = useState(0);
 
-  function handleFormFocus(activeFormId) {
+  const handleFormFocus = (activeFormId) => {
     setActiveForm(activeFormId);
   };
+
 
   return (
     <>
       <div className='forms'>
-        <PersonalDetailForm activeStatus={activeForm === 0 ? true : false} setActiveStatus={handleFormFocus}/>
+        <PersonalDetailForm
+            currentCvInfo={currentCvInfo}
+            setCurrentCvInfo={setCurrentCvInfo}
+            activeStatus={activeForm === 0 ? true : false}
+            setActiveStatus={handleFormFocus}
+          />
         <EducationForm activeStatus={activeForm === 1 ? true : false} setActiveStatus={handleFormFocus}/>
         <ExperienceForm activeStatus={activeForm === 2 ? true : false} setActiveStatus={handleFormFocus}/>
       </div>
@@ -34,7 +40,7 @@ function App() {
         <div className='cv-header'>
           <div>
             <h2>{currentCvInfo.personalInfo.name}</h2>
-            <i>{currentCvInfo.personalInfo.phoneNumber} | {currentCvInfo.personalInfo.email}</i>
+            <i>{currentCvInfo.personalInfo.number} | {currentCvInfo.personalInfo.email}</i>
             <p>{currentCvInfo.personalInfo.summary}</p>
           </div>
           <span className='design-pad'></span>
