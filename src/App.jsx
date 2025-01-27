@@ -13,11 +13,42 @@ function App() {
       summary: 'I am a very good programmer',
     },
     educationInfo: {
-
+      institution: '',
+      startYear: '',
+      endYear: '',
+      description: ''
     },
-    experienceInfo: {},
+    experienceInfo: {
+      companyName: '',
+      role: '',
+      startYear: '',
+      endYear: '',
+      description: '',
+    },
   });
   const [activeForm, setActiveForm] = useState(0);
+
+  const educationsList = [];
+  const experiencesList = [];
+
+  const addEducation = (institution, startYear, endYear, description) => {
+    educationsList.push({
+        institution,
+        startYear,
+        endYear,
+        description,
+    });
+  };
+
+  const addExperience = (companyName,role, startYear, endYear, description) => {
+    experiencesList.push({
+        companyName,
+        role,
+        startYear,
+        endYear,
+        description,
+    });
+  };
 
   const handleFormFocus = (activeFormId) => {
     setActiveForm(activeFormId);
@@ -32,9 +63,21 @@ function App() {
             setCurrentCvInfo={setCurrentCvInfo}
             activeStatus={activeForm === 0 ? true : false}
             setActiveStatus={handleFormFocus}
-          />
-        <EducationForm activeStatus={activeForm === 1 ? true : false} setActiveStatus={handleFormFocus}/>
-        <ExperienceForm activeStatus={activeForm === 2 ? true : false} setActiveStatus={handleFormFocus}/>
+        />
+        <EducationForm
+          addEducation={addEducation}
+          currentCvInfo={currentCvInfo}
+          setCurrentCvInfo={setCurrentCvInfo}
+          activeStatus={activeForm === 1 ? true : false}
+          setActiveStatus={handleFormFocus}
+        />
+        <ExperienceForm
+          addExperience={addExperience}
+          currentCvInfo={currentCvInfo}
+          setCurrentCvInfo={setCurrentCvInfo}
+          activeStatus={activeForm === 2 ? true : false}
+          setActiveStatus={handleFormFocus}
+        />
       </div>
       <section id="cv">
         <div className='cv-header'>
