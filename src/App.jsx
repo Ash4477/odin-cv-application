@@ -2,10 +2,13 @@ import { useState } from 'react';
 import PersonalDetailForm from './components/PersonalDetailForm';
 import EducationForm from './components/EducationForm';
 import ExperienceForm from './components/ExperienceForm';
+import EducationListItem from './components/EducationListItem';
+import ExperienceListItem from './components/ExperienceListItem';
 import './styles/App.css';
 
 function App() {
   const [currentCvInfo, setCurrentCvInfo] = useState({
+    isActive: false,
     personalInfo: {
       name: 'Adil Feroze',
       number: '03120430315',
@@ -14,6 +17,8 @@ function App() {
     },
     educationInfo: {
       institution: '',
+      program: '',
+      grade: '',
       startYear: '',
       endYear: '',
       description: ''
@@ -31,16 +36,18 @@ function App() {
   const educationsList = [];
   const experiencesList = [];
 
-  const addEducation = (institution, startYear, endYear, description) => {
+  const addEducation = (institution, startYear, endYear, program, grade, description) => {
     educationsList.push({
         institution,
         startYear,
         endYear,
+        program,
+        grade,
         description,
     });
   };
 
-  const addExperience = (companyName,role, startYear, endYear, description) => {
+  const addExperience = (companyName, role, startYear, endYear, description) => {
     experiencesList.push({
         companyName,
         role,
@@ -91,43 +98,46 @@ function App() {
         <div className='cv-info'>
           <h3>Education:</h3>
           <ul>
-            <li>
-              <div>
-                <p>COMSATS</p>
-                <p>2022-2025</p>
-              </div>
-              <i>Program: BSCS, Grade: A+</i>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div>
-                <p>COMSATS</p>
-                <p>2022-2025</p>
-              </div>
-              <i>Program: BSCS, Grade: A+</i>
-            </li>
+            {educationsList.map(edu => (
+              <EducationListItem
+                institution={edu.institution}
+                startYear={edu.startYear}
+                endYear={edu.endYear}
+                program={edu.program}
+                grade={edu.grade}
+                description={edu.description}
+              />
+            ))}
+            { currentCvInfo.isActive && <EducationListItem
+                institution={currentCvInfo.educationInfo.institution}
+                startYear={currentCvInfo.educationInfo.startYear}
+                endYear={currentCvInfo.educationInfo.endYear}
+                program={currentCvInfo.educationInfo.program}
+                grade={currentCvInfo.educationInfo.grade}
+                description={currentCvInfo.educationInfo.description}
+            /> }
           </ul>
         </div>
         <div className='cv-info'>
           <h3>Experiences:</h3>
           <ul>
-            <li>
-              <div>
-                <p>COMSATS</p>
-                <p>2022-2025</p>
-              </div>
-              <i>Program: BSCS, Grade: A+</i>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div>
-                <p>COMSATS</p>
-                <p>2022-2025</p>
-              </div>
-              <i>Program: BSCS, Grade: A+</i>
-            </li>
+          { experiencesList.map(exp => (
+              <ExperienceListItem
+                companyName={exp.companyName}
+                role={exp.role}
+                startYear={exp.startYear}
+                endYear={exp.endYear}
+                description={exp.description}
+              />
+            )) }
+            { currentCvInfo.isActive &&  
+              <ExperienceListItem
+                companyName={currentCvInfo.experienceInfo.companyName}
+                role={currentCvInfo.experienceInfo.role}
+                startYear={currentCvInfo.experienceInfo.startYear}
+                endYear={currentCvInfo.experienceInfo.endYear}
+                description={currentCvInfo.experienceInfo.description}
+              /> }
           </ul>
         </div>
       </section>

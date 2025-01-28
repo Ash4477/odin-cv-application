@@ -3,7 +3,7 @@ import FormBox from "./FormBox";
 const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeStatus, setActiveStatus }) => {
     const formId = 1;
 
-    const {  institution, startYear, endYear, description } = currentCvInfo.educationInfo;
+    const {  institution, startYear, endYear, program, grade, description } = currentCvInfo.educationInfo;
 
     const handleNameChange = (e) => {
         setCurrentCvInfo({
@@ -20,6 +20,24 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
             educationInfo: {
                 ...currentCvInfo.educationInfo,
                 startYear: e.target.value,
+            },
+        });
+    };
+    const handleProgramChange = (e) => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                ...currentCvInfo.educationInfo,
+                program: e.target.value,
+            },
+        });
+    };
+    const handleGradeChange = (e) => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                ...currentCvInfo.educationInfo,
+                grade: e.target.value,
             },
         });
     };
@@ -58,6 +76,16 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
                 <div className="input-box">
                     <label htmlFor="institute-input">Institute Name</label>
                     <input id="institute-input" type="text" value={institution} onChange={handleNameChange} required />
+                </div>
+                
+                <div className="input-box">
+                    <label htmlFor="prog-input">Program/Degree</label>
+                    <input id="prog-input" type="text" value={program} onChange={handleProgramChange} required />
+                </div>
+                
+                <div className="input-box">
+                    <label htmlFor="grade-input">Grade</label>
+                    <input id="grade-input" type="text" value={grade} onChange={handleGradeChange} required />
                 </div>
                 
                 <div className="input-box">
