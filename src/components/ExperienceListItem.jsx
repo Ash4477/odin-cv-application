@@ -2,11 +2,10 @@ function ExperienceListItem({  companyName, role, startYear, endYear, descriptio
     return (
       <li>
         <div>
-          <p>{role}</p>
-          <p>{companyName}</p>
+          <p>{role} at {companyName}</p>
           <p>{startYear}-{endYear}</p>
         </div>
-        <i>Description: </i>
+        <i>Responsiblities: </i>
         <p>{description}</p>
       </li>
     );

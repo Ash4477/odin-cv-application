@@ -151,11 +151,41 @@ button, input[type='submit'], input[type='reset'] {
     padding: 0.5rem;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
 }
 
 button:hover, input[type='submit']:hover, input[type='reset']:hover {
     cursor: pointer;
     background-color: #e2e8f0;
     border-radius: 2.5rem;
-    transition: background-color 0.3s ease-in-out;
+}
+
+.edit-button-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-button-box span {
+    display: flex;
+    align-items: center;
+}
+
+.edit-button-box button:first-child:hover {
+    color: red;
+}
+
+.edit-button-box button:last-child:hover {
+    color: var(--secondary-color);
+}
+
+.add-button {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.add-button:hover {
+    color: var(--secondary-color);
 }

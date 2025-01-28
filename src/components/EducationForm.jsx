@@ -1,9 +1,9 @@
+import { FaTrash, FaEdit, FaPlus } from "react-icons/fa"
 import FormBox from "./FormBox";
 
-const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeStatus, setActiveStatus }) => {
+const EducationForm = ({ educationsList, addEducation, deleteEducation, currentCvInfo, setCurrentCvInfo, activeStatus, setActiveStatus }) => {    
     const formId = 1;
-
-    const {  institution, startYear, endYear, program, grade, description } = currentCvInfo.educationInfo;
+    const {  isActive, institution, startYear, endYear, program, grade, description } = currentCvInfo.educationInfo;
 
     const handleNameChange = (e) => {
         setCurrentCvInfo({
@@ -62,9 +62,74 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
 
     const submitForm = (e) => {
         e.preventDefault();
-        addEducation(institution, startYear, endYear, description);
+        deactivateForm();
+        addEducation(institution, startYear, endYear, program, grade, description);
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                isActive: false,
+                institution: '',
+                program: '',
+                grade: '',
+                startYear: '',
+                endYear: '',
+                description: ''
+              },
+        });
     };
-    
+
+    const activateForm = () => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                ...currentCvInfo.educationInfo,
+                isActive: true,
+            },
+        });
+    };
+
+    const deactivateForm = () => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                ...currentCvInfo.educationInfo,
+                isActive: false,
+            },
+        });
+    };
+
+    const editEducation = (itemIndex) => {
+        const editItem = educationsList[itemIndex];
+        deleteEducation(itemIndex);
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                isActive: true,
+                institution: editItem.institution, 
+                startYear: editItem.startYear,
+                endYear: editItem.endYear,
+                program: editItem.program,
+                grade: editItem.grade,
+                description: editItem.description,
+            }
+        });
+    };
+
+     const resetForm = () => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            educationInfo: {
+                isActive: true,
+                institution: '',
+                program: '',
+                grade: '',
+                startYear: '',
+                endYear: '',
+                description: ''
+              },
+        });
+    };
+
     return(
         <FormBox 
             formTitle="Education Details"
@@ -72,7 +137,8 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
             setActiveStatus={setActiveStatus} 
             activeFormId={formId}
         >
-            <form onSubmit={submitForm}>
+            { isActive ? (
+                <form onSubmit={submitForm}>
                 <div className="input-box">
                     <label htmlFor="institute-input">Institute Name</label>
                     <input id="institute-input" type="text" value={institution} onChange={handleNameChange} required />
@@ -90,12 +156,12 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
                 
                 <div className="input-box">
                     <label htmlFor="startdate">Start Date</label>
-                    <input id="startdate" type="date" value={startYear} onChange={handleStartYearChange} required/>
+                    <input id="startdate" type="number" value={startYear} onChange={handleStartYearChange} required/>
                 </div>
                 
                 <div className="input-box">
                     <label htmlFor="enddate">End Date (ignore if still working here)</label>
-                    <input id="enddate" type="date" value={endYear} onChange={handleEndYearChange}/>
+                    <input id="enddate" type="number" value={endYear} onChange={handleEndYearChange}/>
                 </div>
                 
                 <div className="input-box">
@@ -105,9 +171,30 @@ const EducationForm = ({ addEducation, currentCvInfo, setCurrentCvInfo, activeSt
                 
                 <div className="btn-box">
                     <input type="submit" value="Save"/>
-                    <input type="reset" value="Clear"/>
+                    <input type="reset" value="Clear" onClick={resetForm}/>
                 </div>
             </form>
+            ) : (
+                <>
+                   <ul>
+                    {educationsList.map((edu,idx) => (
+                        <li className="edit-button-box" style={{ listStyle: "none" }} key={`${edu.institution}+${idx}`}>
+                            <h4>{edu.institution}</h4>
+                            <span>
+                                <button onClick={() => deleteEducation(idx)}><FaTrash size={18}/></button>
+                                <button onClick={() => editEducation(idx)}><FaEdit size={18}/></button>
+                            </span>
+                        </li>
+                    ))}
+                   </ul>
+                    <button
+                        className="add-button"
+                        onClick={activateForm}
+                    >
+                        <FaPlus/> <p>Add Education</p>
+                    </button>
+                </>
+            ) }
         </FormBox>
     );
 };

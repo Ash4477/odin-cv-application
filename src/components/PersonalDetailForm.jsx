@@ -44,6 +44,18 @@ const PersonalDetailForm = ({ currentCvInfo, activeStatus, setActiveStatus, setC
         });
     };
 
+    const resetForm = () => {
+        setCurrentCvInfo({
+            ...currentCvInfo,
+            personalInfo: {
+                name: '',
+                number: '',
+                email: '',
+                summary: '',
+            }
+        });
+    };
+
     return(
         <FormBox 
             formTitle="Personal Details"  
@@ -73,8 +85,7 @@ const PersonalDetailForm = ({ currentCvInfo, activeStatus, setActiveStatus, setC
                 </div>
                 
                 <div className="btn-box">
-                    <input type="submit" value="Save"/>
-                    <input type="reset" value="Clear"/>
+                    <input type="reset" value="Clear" onClick={resetForm}/>
                 </div>
             </form>
         </FormBox>

@@ -7,15 +7,17 @@ import ExperienceListItem from './components/ExperienceListItem';
 import './styles/App.css';
 
 function App() {
+  const [educationsList, setEducationsList] = useState([]);
+  const [experiencesList, setExperiencesList] = useState([]);
   const [currentCvInfo, setCurrentCvInfo] = useState({
-    isActive: false,
     personalInfo: {
-      name: 'Adil Feroze',
-      number: '03120430315',
-      email: 'adilferoze321@gmail.com',
+      name: 'John Doe',
+      number: '+92123456789',
+      email: 'johndoe@gmail.com',
       summary: 'I am a very good programmer',
     },
     educationInfo: {
+      isActive: false,
       institution: '',
       program: '',
       grade: '',
@@ -24,6 +26,7 @@ function App() {
       description: ''
     },
     experienceInfo: {
+      isActive: false,
       companyName: '',
       role: '',
       startYear: '',
@@ -33,34 +36,32 @@ function App() {
   });
   const [activeForm, setActiveForm] = useState(0);
 
-  const educationsList = [];
-  const experiencesList = [];
-
   const addEducation = (institution, startYear, endYear, program, grade, description) => {
-    educationsList.push({
-        institution,
-        startYear,
-        endYear,
-        program,
-        grade,
-        description,
-    });
+    setEducationsList(prev => [...prev, { institution, program, grade, startYear, endYear, description }]);
+  };
+
+  
+  const deleteEducation = (itemIndex) => {
+    setEducationsList(prev => prev.filter((item, idx) => idx != itemIndex));
   };
 
   const addExperience = (companyName, role, startYear, endYear, description) => {
-    experiencesList.push({
-        companyName,
-        role,
-        startYear,
-        endYear,
-        description,
-    });
+    setExperiencesList(prev => [...prev, {
+      companyName,
+      role,
+      startYear,
+      endYear,
+      description,
+  }]);
+  };
+
+  const deleteExperience = (itemIndex) => {
+    setExperiencesList(prev => prev.filter((item, idx) => idx != itemIndex));
   };
 
   const handleFormFocus = (activeFormId) => {
     setActiveForm(activeFormId);
   };
-
 
   return (
     <>
@@ -72,14 +73,18 @@ function App() {
             setActiveStatus={handleFormFocus}
         />
         <EducationForm
+          educationsList={educationsList}
           addEducation={addEducation}
+          deleteEducation={deleteEducation}
           currentCvInfo={currentCvInfo}
           setCurrentCvInfo={setCurrentCvInfo}
           activeStatus={activeForm === 1 ? true : false}
           setActiveStatus={handleFormFocus}
         />
         <ExperienceForm
+          experiencesList={experiencesList}
           addExperience={addExperience}
+          deleteExperience={deleteExperience}
           currentCvInfo={currentCvInfo}
           setCurrentCvInfo={setCurrentCvInfo}
           activeStatus={activeForm === 2 ? true : false}
@@ -98,8 +103,9 @@ function App() {
         <div className='cv-info'>
           <h3>Education:</h3>
           <ul>
-            {educationsList.map(edu => (
+            {educationsList.map((edu, idx) => (
               <EducationListItem
+                key={`${edu.institution}+${idx}`}
                 institution={edu.institution}
                 startYear={edu.startYear}
                 endYear={edu.endYear}
@@ -108,7 +114,7 @@ function App() {
                 description={edu.description}
               />
             ))}
-            { currentCvInfo.isActive && <EducationListItem
+            { currentCvInfo.educationInfo.isActive && <EducationListItem
                 institution={currentCvInfo.educationInfo.institution}
                 startYear={currentCvInfo.educationInfo.startYear}
                 endYear={currentCvInfo.educationInfo.endYear}
@@ -121,8 +127,9 @@ function App() {
         <div className='cv-info'>
           <h3>Experiences:</h3>
           <ul>
-          { experiencesList.map(exp => (
+          { experiencesList.map((exp, idx) => (
               <ExperienceListItem
+                key={`${exp.institution}+${idx}`}
                 companyName={exp.companyName}
                 role={exp.role}
                 startYear={exp.startYear}
@@ -130,7 +137,7 @@ function App() {
                 description={exp.description}
               />
             )) }
-            { currentCvInfo.isActive &&  
+            { currentCvInfo.experienceInfo.isActive &&  
               <ExperienceListItem
                 companyName={currentCvInfo.experienceInfo.companyName}
                 role={currentCvInfo.experienceInfo.role}
